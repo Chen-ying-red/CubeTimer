@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CFOP 教程移动端适配版排版预览</title>
+    <!-- 引入 Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #f3f4f6;
+            --bg-card: #ffffff;
+            --border-card: #e5e7eb;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --bg-code: #f9fafb;
+            --border-code: #f3f4f6;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --segmented-bg: #e5e7eb;
+            --segmented-active: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --safe-bottom: 0px;
+        }
+
+        html.dark {
+            --bg-page: #0a0a0a;
+            --bg-card: #121212;
+            --border-card: #1e1e1e;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --bg-code: #181818;
+            --border-code: #222222;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --segmented-bg: #1e1e1e;
+            --segmented-active: #2e2e2e;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 16px;
+            padding-bottom: calc(32px + var(--safe-bottom));
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* 主布局容器 - 响应式适配 */
+        .tutorial-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* 标题区 */
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-row h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* segmented control 胶囊式 Tab */
+        .segmented-control {
+            display: flex;
+            background-color: var(--segmented-bg);
+            padding: 4px;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            gap: 4px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .segment-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .segment-btn.active {
+            background-color: var(--segmented-active);
+            color: var(--accent-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* 搜索与速度控制行 */
+        .controls-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .controls-row {
+                flex-direction: row;
+                align-items: center;
+                gap: 16px;
+            }
+            .search-container {
+                flex: 1;
+            }
+            .speed-control-bar {
+                flex-shrink: 0;
+                width: 320px;
+            }
+        }
+
+        /* 搜索框 */
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+            padding: 12px 16px 12px 38px;
+            font-size: 13px;
+            border-radius: 14px;
+            outline: none;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* 速度控制栏 */
+        .speed-control-bar {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .speed-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .speed-info i {
+            color: var(--accent-red);
+        }
+
+        .speed-value {
+            color: var(--accent-blue);
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .speed-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 180px;
+        }
+
+        .speed-slider-container span {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .speed-range {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--segmented-bg);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .speed-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            border: 2px solid var(--bg-card);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.1s;
+        }
+
+        .speed-range::-webkit-slider-thumb:active {
+            transform: scale(1.25);
+        }
+
+        /* 滚动内容区 */
+        .scroll-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 24px;
+        }
+
+        /* 分组大卡片 */
+        .group-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+
+        /* 列表网格 - 电脑端多列，移动端单列 */
+        .formula-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (min-width: 640px) {
+            .formula-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        .group-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px dashed var(--border-card);
+        }
+
+        .group-title i {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        /* 新版移动端公式卡片 (核心排版重构) */
+        .formula-card {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-page);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            touch-action: manipulation;
+        }
+
+        .formula-card:active {
+            transform: scale(0.995);
+        }
+
+        .formula-card.expanded {
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 头部点按热区 */
+        .card-header {
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            gap: 12px;
+        }
+
+        .card-title-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 配色徽章 */
+        .id-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .badge-f2l {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+        }
+
+        .badge-oll {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #ffffff;
+        }
+
+        .badge-pll {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+        }
+
+        .formula-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* 旋转的 chevron 折叠指示器 */
+        .chevron-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .formula-card.expanded .chevron-btn {
+            transform: rotate(90deg);
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            border-color: var(--accent-blue);
+        }
+
+        /* 公式长代码块 - 完全重排：独占一行、防横向溢出 */
+        .formula-block {
+            margin: 0 14px 12px 14px;
+            padding: 10px 14px;
+            background-color: var(--bg-code);
+            border: 1px solid var(--border-code);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .formula-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            word-break: break-all; /* 保证手机上自动折行 */
+            line-height: 1.6;
+            flex: 1;
+            user-select: all;
+        }
+
+        /* 一键复制 */
+        .copy-btn {
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--bg-card);
+            color: var(--accent-blue);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* 展开的魔方渲染动画区 - 针对竖屏大重构 */
+        .expanded-area {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--bg-code);
+            border-top: 1px dashed var(--border-card);
+        }
+
+        .formula-card.expanded .expanded-area {
+            max-height: 300px;
+            opacity: 1;
+        }
+
+        .expanded-wrapper {
+            padding: 16px;
+            display: flex;
+            flex-direction: column; /* 竖屏适配：直接垂直堆叠 */
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* 3D 容器 - 尺寸在手机端适度增大方便触控旋转 */
+        .cube-container {
+            width: 140px;
+            height: 140px;
+            border-radius: 18px;
+            background-color: var(--bg-page);
+            border: 1px solid var(--border-card);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 电脑端激活选中状态与悬停效果 */
+        .formula-card.active-selection {
+            border-color: var(--accent-blue) !important;
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow-md) !important;
+        }
+
+        @media (min-width: 1024px) {
+            .formula-card {
+                cursor: pointer;
+            }
+            .formula-card:hover {
+                border-color: var(--accent-blue);
+                box-shadow: var(--shadow-sm);
+            }
+            .chevron-btn {
+                display: none !important;
+            }
+            .expanded-area {
+                display: none !important;
+            }
+        }
+
+        /* 布局主工作区 */
+        .tutorial-workspace {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        .formulas-list-pane {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 桌面端 3D 面板 */
+        .cube-viewer-pane {
+            width: 340px;
+            position: sticky;
+            top: 24px;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .cube-viewer-pane {
+                display: block;
+            }
+        }
+
+        .sticky-viewer-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .viewer-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .viewer-badge {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 8px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .viewer-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .viewer-formula-box {
+            background-color: var(--bg-code);
+            border: 1px solid var(--border-code);
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .viewer-formula-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            word-break: break-all;
+            flex: 1;
+        }
+
+        .viewer-cube-container {
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-page);
+            border-radius: 16px;
+            border: 1px solid var(--border-card);
+            overflow: hidden;
+            padding: 16px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .viewer-cube-container .cube-container {
+            width: 180px;
+            height: 180px;
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* 复制成功的 Toast 弹窗 */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translate(-50%, 50px);
+            background-color: rgba(17, 24, 39, 0.95);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .toast i {
+            color: #10b981;
+        }
+
+        /* 模拟 3D 魔方 Canvas 渲染错误时兜底 */
+        .cube-fallback {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* 提示卡片 */
+        .tips-card {
+            background-color: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 16px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .tips-card strong {
+            color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tutorial-container">
+        
+        <!-- 头部导航及标题 -->
+        <div class="header-section">
+            <div class="title-row">
+                <h1>CFOP 教程 (适配版)</h1>
+                <button onclick="toggleTheme()" class="theme-toggle-btn" title="切换主题">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+            <p class="subtitle">针对手机竖屏重构了公式展示区，单手大按钮触控更防滑。魔方配色默认微调为黄顶白底、绿色在前（橙右红左）。</p>
+        </div>
+
+        <!-- Segmented Tab -->
+        <div class="segmented-control">
+            <button class="segment-btn active" onclick="switchTab('f2l', this)">F - 前两层</button>
+            <button class="segment-btn" onclick="switchTab('oll', this)">O - 顶层方向</button>
+            <button class="segment-btn" onclick="switchTab('pll', this)">P - 顶层位置</button>
+        </div>
+
+        <!-- 搜索与速度控制行 -->
+        <div class="controls-row">
+            <!-- 搜索框 -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="过滤公式名称或编号（如: F2L 15）..." oninput="handleSearch(this.value)" class="search-input">
+            </div>
+
+            <!-- 速度控制器 -->
+            <div class="speed-control-bar">
+                <div class="speed-info">
+                    <i class="fas fa-running"></i>
+                    <span>演示速度:</span>
+                    <span id="speedVal" class="speed-value">22</span>
+                </div>
+                <div class="speed-slider-container">
+                    <span>慢</span>
+                    <input type="range" min="8" max="40" value="22" oninput="changeSpeed(this.value)" class="speed-range">
+                    <span>快</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主工作区：桌面端分栏，移动端单栏 -->
+        <div class="tutorial-workspace">
+            
+            <!-- 左栏：公式列表 -->
+            <div class="formulas-list-pane">
+                <div class="scroll-content" id="listContent">
+                    <!-- 动态注入数据 -->
+                </div>
+            </div>
+
+            <!-- 右栏：3D 演示器固钉面板 (仅电脑端显示) -->
+            <div class="cube-viewer-pane" id="desktopViewerPane">
+                <div class="sticky-viewer-card">
+                    <div class="viewer-header">
+                        <div id="desktopBadge" class="viewer-badge badge-f2l">F2L 1</div>
+                        <h3 id="desktopTitle" class="viewer-title">正在载入...</h3>
+                    </div>
+                    
+                    <div class="viewer-formula-box">
+                        <div id="desktopFormula" class="viewer-formula-text">R U R'</div>
+                        <button onclick="copyToClipboard(activeDesktopFormula, event)" class="copy-btn" title="复制公式">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div class="viewer-cube-container">
+                        <div id="desktop-cube-container" class="cube-container">
+                            <!-- AnimCube 将在此动态加载 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast 弹窗 -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>公式已复制到剪贴板</span>
+    </div>
+
+    <!-- 导入外部 AnimCube3 脚本 -->
+    <script src="./AnimCube3.js"></script>
+    <script>
+        // 模拟数据源
+        const mockData = {
+            f2l: [
+                { id: "F2L 1", category: "基本插入", name: "右侧基本插入", formula: "R U R'" },
+                { id: "F2L 2", category: "基本插入", name: "左侧基本插入", formula: "L' U' L" },
+                { id: "F2L 15", category: "角和棱都在顶层", name: "角白朝右，侧面颜色不同", formula: "R U' R'" }
+            ],
+            oll: [
+                { id: "OLL 27", category: "点/线/C/L形", name: "小鱼一式 (Sune)", formula: "R U R' U R U2 R'" },
+                { id: "OLL 26", category: "点/线/C/L形", name: "小鱼二式 (Anti-Sune)", formula: "R U2 R' U' R U' R'" }
+            ],
+            pll: [
+                { id: "PLL T", category: "全部公式", name: "T 步 (T-Perm)", formula: "R U R' U' R' F R2 U' R' U' R U R' F'" },
+                { id: "PLL Y", category: "全部公式", name: "Y 步 (Y-Perm)", formula: "F R U' R' U' R U R' F' R U R' U' R' F R F'" }
+            ]
+        };
+
+        let activeTab = 'f2l';
+        let searchQuery = '';
+        let globalSpeed = 22;
+        let activeAnimId = null;
+
+        // 切换 Tab
+        function switchTab(tab, btn) {
+            activeTab = tab;
+            document.querySelectorAll('.segment-btn').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            renderList();
+        }
+
+        // 过滤搜索
+        function handleSearch(val) {
+            searchQuery = val.trim().toLowerCase();
+            renderList();
+        }
+
+        let activeDesktopFormula = '';
+
+        // 卡片点击入口 - 处理桌面端与移动端的分流
+        function handleCardClick(id, formula, name, e) {
+            // 如果点击复制按钮，直接返回
+            if (e.target.closest('.copy-btn')) return;
+
+            if (window.innerWidth >= 1024) {
+                selectFormula(id, formula, name);
+            } else {
+                toggleCard(id);
+            }
+        }
+
+        // 桌面端选中公式逻辑
+        function selectFormula(id, formula, name) {
+            activeAnimId = id;
+            activeDesktopFormula = formula;
+            
+            // 高亮左侧卡片
+            document.querySelectorAll('.formula-card').forEach(el => el.classList.remove('active-selection'));
+            const card = document.getElementById(`card-${id}`);
+            if (card) {
+                card.classList.add('active-selection');
+            }
+
+            // 更新右侧面板
+            const badge = document.getElementById('desktopBadge');
+            const title = document.getElementById('desktopTitle');
+            const formulaText = document.getElementById('desktopFormula');
+            
+            if (badge) {
+                badge.innerText = id;
+                badge.className = `viewer-badge badge-${activeTab}`;
+            }
+            if (title) title.innerText = name;
+            if (formulaText) formulaText.innerText = formula;
+
+            // 载入 3D 魔方
+            initDesktopCube(formula);
+        }
+
+        // 清空桌面端 3D 显示
+        function clearDesktopViewer() {
+            activeAnimId = null;
+            activeDesktopFormula = '';
+            const badge = document.getElementById('desktopBadge');
+            const title = document.getElementById('desktopTitle');
+            const formulaText = document.getElementById('desktopFormula');
+            const container = document.getElementById('desktop-cube-container');
+            
+            if (badge) badge.innerText = '';
+            if (title) title.innerText = '未选择公式';
+            if (formulaText) formulaText.innerText = '';
+            if (container) container.innerHTML = '<div class="text-xs text-neutral-400">请选择一个公式</div>';
+        }
+
+        // 桌面端 3D 魔方渲染
+        function initDesktopCube(formula) {
+            const containerId = 'desktop-cube-container';
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = ''; // 清空
+
+            let cleanFormula = formula.replace(/[()\[\],]/g, ' ').replace(/\s+/g, ' ').trim();
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const bgcolorHex = isDark ? '121212' : 'ffffff'; // 自适应右侧卡片底色
+
+            const speedParam = Math.max(2, 48 - globalSpeed);
+            const paramStr = `id=${containerId}&bgcolor=${bgcolorHex}&buttonbar=0&edit=0&repeat=1&speed=${speedParam}&movetext=0&clickprogress=0&initrevmove=#&demo=#&move=${encodeURIComponent(cleanFormula)}`;
+
+            try {
+                if (typeof AnimCube3 === 'function') {
+                    AnimCube3(paramStr);
+                } else {
+                    container.innerHTML = `
+                        <div class="cube-fallback">
+                            <i class="fas fa-cube text-3xl text-neutral-400 mb-2"></i>
+                            <span>AnimCube 未加载</span>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error("AnimCube3 error:", e);
+                container.innerHTML = '<div class="text-xs text-red-500">加载失败</div>';
+            }
+        }
+
+        // 速度滑块更改
+        function changeSpeed(val) {
+            globalSpeed = val;
+            document.getElementById('speedVal').innerText = val;
+            // 实时更新当前正在运行的 3D 魔方速度参数
+            if (window.innerWidth >= 1024) {
+                if (activeDesktopFormula) {
+                    initDesktopCube(activeDesktopFormula);
+                }
+            } else {
+                if (activeAnimId) {
+                    initAnimCube(activeAnimId);
+                }
+            }
+        }
+
+        // 切换折叠与展开 (仅移动端生效)
+        function toggleCard(id) {
+            const cardEl = document.getElementById(`card-${id}`);
+            const wasExpanded = cardEl.classList.contains('expanded');
+            
+            // 收起所有其他的
+            document.querySelectorAll('.formula-card').forEach(el => {
+                el.classList.remove('expanded');
+                const innerContainer = el.querySelector('.cube-container-box');
+                if (innerContainer) innerContainer.innerHTML = ''; // 清理
+            });
+
+            if (wasExpanded) {
+                activeAnimId = null;
+                if (window.acjs_removeListeners && window.acjs_removeListeners[activeAnimId]) {
+                    window.acjs_removeListeners[activeAnimId]();
+                }
+            } else {
+                cardEl.classList.add('expanded');
+                activeAnimId = id;
+                setTimeout(() => {
+                    initAnimCube(id);
+                }, 50);
+            }
+        }
+
+        // 初始化 AnimCube 3D 演示
+        function initAnimCube(id) {
+            const containerId = `tutorial-cube-container-${id}`;
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.innerHTML = ''; // 清除 loading 旋转图标
+
+            // 提取公式
+            const cardEl = document.getElementById(`card-${id}`);
+            const formulaStr = cardEl.getAttribute('data-formula');
+            let cleanFormula = formulaStr.replace(/[()\[\],]/g, ' ').replace(/\s+/g, ' ').trim();
+
+            const isDark = document.documentElement.classList.contains('dark');
+            const bgcolorHex = isDark ? '181818' : 'f3f4f6';
+
+            // 反向速度映射 Math.max(2, 48 - speed)
+            const speedParam = Math.max(2, 48 - globalSpeed);
+            
+            // 拼接 AnimCube 参数
+            // initrevmove=# 会使得魔方反向打乱，demo=# 会开启无限循环动画演示，move=... 是正向还原步骤
+            const paramStr = `id=${containerId}&bgcolor=${bgcolorHex}&buttonbar=0&edit=0&repeat=1&speed=${speedParam}&movetext=0&clickprogress=0&initrevmove=#&demo=#&move=${encodeURIComponent(cleanFormula)}`;
+
+            try {
+                if (typeof AnimCube3 === 'function') {
+                    AnimCube3(paramStr);
+                } else {
+                    container.innerHTML = `
+                        <div class="cube-fallback">
+                            <i class="fas fa-cube text-2xl text-neutral-400 mb-1"></i>
+                            <span>AnimCube 未加载</span>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error("AnimCube3 error:", e);
+                container.innerHTML = '<div class="text-[10px] text-red-500">加载失败</div>';
+            }
+        }
+
+        // 渲染列表
+        function renderList() {
+            const container = document.getElementById('listContent');
+            container.innerHTML = '';
+
+            let rawList = mockData[activeTab];
+            if (searchQuery) {
+                rawList = rawList.filter(item => 
+                    item.id.toLowerCase().includes(searchQuery) ||
+                    item.name.toLowerCase().includes(searchQuery) ||
+                    item.formula.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (rawList.length === 0) {
+                container.innerHTML = '<div class="text-center text-neutral-400 text-xs py-8">未找到匹配公式</div>';
+                return;
+            }
+
+            // 分组归纳
+            const groups = {};
+            rawList.forEach(item => {
+                const cat = item.category || '全部公式';
+                if (!groups[cat]) groups[cat] = [];
+                groups[cat].push(item);
+            });
+
+            // 获取徽章背景样式
+            const badgeClass = `id-badge badge-${activeTab}`;
+
+            Object.keys(groups).forEach(cat => {
+                const section = document.createElement('section');
+                section.className = 'group-section';
+                
+                const title = document.createElement('div');
+                title.className = 'group-title';
+                title.innerHTML = `<i class="fas fa-cube"></i><span>${cat}</span>`;
+                section.appendChild(title);
+
+                // 创建网格容器
+                const grid = document.createElement('div');
+                grid.className = 'formula-grid';
+
+                groups[cat].forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'formula-card';
+                    card.id = `card-${item.id}`;
+                    card.setAttribute('data-formula', item.formula);
+                    
+                    // 用 JS 闭包直接绑定 onclick，规避单引号转义问题
+                    card.onclick = (e) => {
+                        handleCardClick(item.id, item.formula, item.name, e);
+                    };
+
+                    card.innerHTML = `
+                        <!-- 头部点按区域 -->
+                        <div class="card-header">
+                            <div class="card-title-area">
+                                <span class="${badgeClass}">${item.id}</span>
+                                <span class="formula-name">${item.name}</span>
+                            </div>
+                            <button class="chevron-btn">
+                                <i class="fas fa-chevron-right text-[10px]"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 公式独占一行展示 (针对竖屏做防溢出及等宽大号字体适配) -->
+                        <div class="formula-block">
+                            <div class="formula-text">${item.formula}</div>
+                            <button onclick="copyToClipboard('${item.formula}', event)" class="copy-btn" title="一键复制公式">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <!-- 展开区 (无触控提示词) -->
+                        <div class="expanded-area">
+                            <div class="expanded-wrapper">
+                                <div id="tutorial-cube-container-${item.id}" class="cube-container cube-container-box">
+                                    <!-- AnimCube 将在此动态加载 -->
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            });
+
+            // 桌面端加载时，默认自动选中首个卡片
+            if (window.innerWidth >= 1024) {
+                const firstCard = container.querySelector('.formula-card');
+                if (firstCard) {
+                    const firstId = firstCard.id.replace('card-', '');
+                    const formula = firstCard.getAttribute('data-formula');
+                    const name = firstCard.querySelector('.formula-name').innerText;
+                    selectFormula(firstId, formula, name);
+                } else {
+                    clearDesktopViewer();
+                }
+            }
+        }
+
+        // 一键复制
+        function copyToClipboard(text, e) {
+            e.stopPropagation();
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error("复制失败:", err);
+            });
+        }
+
+        // 切换深浅色主题
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fas fa-sun';
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fas fa-moon';
+            }
+            // 重新初始化当前展开的魔方配色以自适应
+            if (window.innerWidth >= 1024) {
+                if (activeDesktopFormula) {
+                    initDesktopCube(activeDesktopFormula);
+                }
+            } else {
+                if (activeAnimId) {
+                    initAnimCube(activeAnimId);
+                }
+            }
+        }
+
+        // 监听窗口尺寸变化，处理分栏与单栏模式的无缝过渡
+        let lastWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+            const currentWidth = window.innerWidth;
+            if ((lastWidth < 1024 && currentWidth >= 1024) || (lastWidth >= 1024 && currentWidth < 1024)) {
+                renderList();
+            }
+            lastWidth = currentWidth;
+        });
+
+        // 页面初次加载渲染列表
+        renderList();
+    </script>
+</body>
+</html>
