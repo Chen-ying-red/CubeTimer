@@ -1,5 +1,5 @@
 {
-  "name": "cubetimer-server",
+  "name": "@chen-ying-red/cubetimer",
   "version": "1.0.0",
   "description": "Cube Timer with local Node.js backend",
   "main": "server.js",
@@ -11,5 +11,12 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chen-ying-red/CubeTimer.git"
   }
 }
