@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/timer/timer",
     "pages/history/history",
     "pages/tutorial/tutorial",
@@ -11,30 +12,6 @@
     "navigationBarTitleText": "Cube Timer",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#121212"
-  },
-  "tabBar": {
-    "color": "#9ca3af",
-    "selectedColor": "#3b82f6",
-    "backgroundColor": "#181818",
-    "borderStyle": "black",
-    "list": [
-      {
-        "pagePath": "pages/timer/timer",
-        "text": "计时"
-      },
-      {
-        "pagePath": "pages/history/history",
-        "text": "记录"
-      },
-      {
-        "pagePath": "pages/tutorial/tutorial",
-        "text": "教程"
-      },
-      {
-        "pagePath": "pages/settings/settings",
-        "text": "设置"
-      }
-    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

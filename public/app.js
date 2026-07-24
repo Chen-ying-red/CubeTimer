@@ -652,6 +652,15 @@ async function confirmSolve(penalty) {
     // 同步写入本地
     localStorage.setItem('cubeSolvesPro', JSON.stringify(solves));
     
+    // 如果在微信小程序中，同步通过 postMessage 发送成绩给小程序原生云开发数据库保存
+    if (window.wx && window.wx.miniProgram) {
+        window.wx.miniProgram.postMessage({
+            data: {
+                action: 'saveSolve',
+                solve: solveObj
+            }
+        });
+    }
 
 
     if(!document.getElementById('historyView').classList.contains('hidden')) {
