@@ -1,5 +1,5 @@
 <!-- pages/tutorial/tutorial.wxml -->
-<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+<view class="page-container {{themeClass}}">
 
   <!-- 1. 胶囊式 Tab 切换栏 -->
   <view class="segmented-control">

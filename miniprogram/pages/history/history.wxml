@@ -1,5 +1,5 @@
 <!-- pages/history/history.wxml -->
-<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+<view class="page-container {{themeClass}}">
   
   <!-- 统计概览卡片 -->
   <view class="stats-card card-box">

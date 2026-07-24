@@ -19,8 +19,12 @@ Page({
   },
 
   onShow: function () {
+    const theme = app.globalData.theme;
+    const style = app.globalData.themeStyle || 'minimal';
+    const themeClass = theme === 'light' ? 'theme-light' : ('theme-' + style);
+
     this.setData({
-      theme: app.globalData.theme
+      themeClass: themeClass
     });
   },
 

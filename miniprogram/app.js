@@ -2,6 +2,7 @@
 App({
   globalData: {
     theme: 'dark', // 'dark' | 'light'
+    themeStyle: 'minimal', // 'minimal' | 'cyberpunk' | 'emerald' | 'sakura' | 'ocean' | 'nord' | 'sunset'
     precision: 2,  // 2 | 3
     solves: [],
     userInfo: null,
@@ -29,10 +30,12 @@ App({
   initLocalData: function () {
     try {
       const theme = wx.getStorageSync('cubeTheme') || 'dark';
+      const themeStyle = wx.getStorageSync('cubeThemeStyle') || 'minimal';
       const precision = wx.getStorageSync('cubeTimerPrecision') || 2;
       const solves = wx.getStorageSync('cubeTimerSolves') || [];
 
       this.globalData.theme = theme;
+      this.globalData.themeStyle = themeStyle;
       this.globalData.precision = parseInt(precision);
       this.globalData.solves = solves;
 

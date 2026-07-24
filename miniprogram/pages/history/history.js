@@ -23,9 +23,12 @@ Page({
   loadHistoryData: function () {
     const solves = app.globalData.solves || [];
     const prec = app.globalData.precision || 2;
+    const theme = app.globalData.theme;
+    const style = app.globalData.themeStyle || 'minimal';
+    const themeClass = theme === 'light' ? 'theme-light' : ('theme-' + style);
 
     this.setData({
-      theme: app.globalData.theme,
+      themeClass: themeClass,
       solves: solves,
       totalCount: solves.length
     });

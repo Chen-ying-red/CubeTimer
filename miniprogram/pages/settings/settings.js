@@ -4,15 +4,57 @@ const app = getApp();
 Page({
   data: {
     theme: 'dark',
+    themeClass: 'theme-minimal',
+    styleKeys: ['minimal', 'cyberpunk', 'emerald', 'sakura', 'ocean', 'nord', 'sunset'],
+    styleOptions: [
+      '简洁黑白 (Minimal)', 
+      '赛博朋克 (Cyberpunk)', 
+      '翡翠森林 (Emerald)', 
+      '浪漫樱花 (Sakura)', 
+      '静谧深海 (Ocean)', 
+      '北欧极光 (Nord)', 
+      '温暖落日 (Sunset)'
+    ],
+    styleIndex: 0,
     precisionOptions: ['0.00 (两位)', '0.000 (三位)'],
     precisionIndex: 0
   },
 
   onShow: function () {
     const prec = app.globalData.precision || 2;
+    const theme = app.globalData.theme || 'dark';
+    const style = app.globalData.themeStyle || 'minimal';
+
+    let sIdx = this.data.styleKeys.indexOf(style);
+    if (sIdx === -1) sIdx = 0;
+
+    const themeClass = theme === 'light' ? 'theme-light' : ('theme-' + style);
+
     this.setData({
-      theme: app.globalData.theme,
+      theme: theme,
+      themeClass: themeClass,
+      styleIndex: sIdx,
       precisionIndex: prec === 3 ? 1 : 0
+    });
+  },
+
+  onStyleChange: function (e) {
+    const idx = parseInt(e.detail.value);
+    const selectedStyleKey = this.data.styleKeys[idx];
+
+    app.globalData.themeStyle = selectedStyleKey;
+    wx.setStorageSync('cubeThemeStyle', selectedStyleKey);
+
+    const themeClass = app.globalData.theme === 'light' ? 'theme-light' : ('theme-' + selectedStyleKey);
+
+    this.setData({
+      styleIndex: idx,
+      themeClass: themeClass
+    });
+
+    wx.showToast({
+      title: '已切换为 ' + this.data.styleOptions[idx],
+      icon: 'none'
     });
   },
 
@@ -31,9 +73,12 @@ Page({
   onThemeToggle: function (e) {
     const isDark = e.detail.value;
     const newTheme = isDark ? 'dark' : 'light';
+    const styleKey = app.globalData.themeStyle || 'minimal';
+    const themeClass = newTheme === 'light' ? 'theme-light' : ('theme-' + styleKey);
 
     this.setData({
-      theme: newTheme
+      theme: newTheme,
+      themeClass: themeClass
     });
 
     app.globalData.theme = newTheme;

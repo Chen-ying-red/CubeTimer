@@ -1,5 +1,5 @@
 <!-- pages/settings/settings.wxml -->
-<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+<view class="page-container {{themeClass}}">
   
   <text class="page-title">设置 (Settings)</text>
 
@@ -17,6 +17,22 @@
   <!-- 2. 偏好设置卡片 -->
   <view class="setting-card card-box">
     
+    <!-- 应用风格配色 (7大多彩模式) -->
+    <view class="setting-item">
+      <view class="item-left">
+        <text class="item-title">应用风格配色 (多彩模式)</text>
+        <text class="item-desc">切换 7 大极炫色彩主题风格</text>
+      </view>
+      <picker bindchange="onStyleChange" value="{{styleIndex}}" range="{{styleOptions}}">
+        <view class="item-picker">
+          <text>{{styleOptions[styleIndex]}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="item-divider"></view>
+
     <!-- 计时显示精度 -->
     <view class="setting-item">
       <view class="item-left">
@@ -33,11 +49,11 @@
 
     <view class="item-divider"></view>
 
-    <!-- 深色 / 极简黑白主题开关 -->
+    <!-- 深色 / 极简纯白模式开关 -->
     <view class="setting-item">
       <view class="item-left">
         <text class="item-title">深色模式 (Dark Mode)</text>
-        <text class="item-desc">切换极简纯白与炫酷黑配色</text>
+        <text class="item-desc">开启深色护眼或极简纯白模式</text>
       </view>
       <switch checked="{{theme === 'dark'}}" bindchange="onThemeToggle" color="#3b82f6"/>
     </view>

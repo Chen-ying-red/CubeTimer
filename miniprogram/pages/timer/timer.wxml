@@ -1,5 +1,5 @@
 <!-- pages/timer/timer.wxml -->
-<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+<view class="page-container {{themeClass}}">
   
   <!-- 1. 顶部控制栏 (魔方类型选择器 & 打乱刷新) -->
   <view class="top-bar {{appState === 'RUNNING' ? 'fade-out' : ''}}">

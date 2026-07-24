@@ -8,9 +8,120 @@ page {
   overflow: hidden;
 }
 
+/* ================= 7 大多彩主题配色系统 ================= */
+
+/* 1. 简洁黑白 (Minimal) */
+page.theme-minimal {
+  background-color: #121212;
+  color: #e5e5e5;
+}
+page.theme-minimal .card-box {
+  background-color: #1c1c1e;
+  border-color: #2c2c2e;
+}
+
+/* 2. 赛博朋克 (Cyberpunk) */
+page.theme-cyberpunk {
+  background-color: #0b0813;
+  color: #00f0ff;
+}
+page.theme-cyberpunk .card-box {
+  background-color: #161024;
+  border: 1rpx solid #ff007f;
+  box-shadow: 0 0 15rpx rgba(255, 0, 127, 0.2);
+}
+page.theme-cyberpunk .timer-idle {
+  color: #ff007f !important;
+  text-shadow: 0 0 20rpx rgba(255, 0, 127, 0.6);
+}
+page.theme-cyberpunk .pb-text, 
+page.theme-cyberpunk .puzzle-title {
+  color: #00f0ff !important;
+}
+
+/* 3. 翡翠森林 (Emerald) */
+page.theme-emerald {
+  background-color: #061712;
+  color: #ecfdf5;
+}
+page.theme-emerald .card-box {
+  background-color: #0c2e24;
+  border-color: #10b981;
+}
+page.theme-emerald .timer-idle, 
+page.theme-emerald .pb-text,
+page.theme-emerald .puzzle-title {
+  color: #10b981 !important;
+}
+
+/* 4. 浪漫樱花 (Sakura) */
+page.theme-sakura {
+  background-color: #1c0d18;
+  color: #fdf2f8;
+}
+page.theme-sakura .card-box {
+  background-color: #38162e;
+  border-color: #ec4899;
+}
+page.theme-sakura .timer-idle, 
+page.theme-sakura .pb-text,
+page.theme-sakura .puzzle-title {
+  color: #ec4899 !important;
+}
+
+/* 5. 静谧深海 (Ocean) */
+page.theme-ocean {
+  background-color: #08121e;
+  color: #f0f9ff;
+}
+page.theme-ocean .card-box {
+  background-color: #0f243a;
+  border-color: #0284c7;
+}
+page.theme-ocean .timer-idle, 
+page.theme-ocean .pb-text,
+page.theme-ocean .puzzle-title {
+  color: #38bdf8 !important;
+}
+
+/* 6. 北欧极光 (Nord) */
+page.theme-nord {
+  background-color: #141b24;
+  color: #eceff4;
+}
+page.theme-nord .card-box {
+  background-color: #232d3b;
+  border-color: #88c0d0;
+}
+page.theme-nord .timer-idle, 
+page.theme-nord .pb-text,
+page.theme-nord .puzzle-title {
+  color: #88c0d0 !important;
+}
+
+/* 7. 温暖落日 (Sunset) */
+page.theme-sunset {
+  background-color: #1a1208;
+  color: #fffbeb;
+}
+page.theme-sunset .card-box {
+  background-color: #33230f;
+  border-color: #f59e0b;
+}
+page.theme-sunset .timer-idle, 
+page.theme-sunset .pb-text,
+page.theme-sunset .puzzle-title {
+  color: #f59e0b !important;
+}
+
+/* 浅色极简黑白 */
 page.theme-light {
   background-color: #ffffff;
   color: #111827;
+}
+page.theme-light .card-box {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
 }
 
 .container {
@@ -34,11 +145,7 @@ page.theme-light {
   border: 1rpx solid #2c2c2e;
   border-radius: 24rpx;
   padding: 24rpx;
-}
-
-page.theme-light .card-box {
-  background-color: #f9fafb;
-  border: 1rpx solid #e5e7eb;
+  transition: all 0.3s ease;
 }
 
 .btn-primary {
