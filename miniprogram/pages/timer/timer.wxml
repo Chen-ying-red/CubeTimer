@@ -1,0 +1,56 @@
+<!-- pages/timer/timer.wxml -->
+<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+  
+  <!-- 1. 顶部控制栏 (魔方类型选择器 & 打乱刷新) -->
+  <view class="top-bar {{appState === 'RUNNING' ? 'fade-out' : ''}}">
+    <picker bindchange="onPuzzleChange" value="{{puzzleIndex}}" range="{{puzzleList}}">
+      <view class="puzzle-picker">
+        <text class="puzzle-title">{{puzzleList[puzzleIndex]}}</text>
+        <text class="picker-icon">▼</text>
+      </view>
+    </picker>
+    <view class="refresh-btn" bindtap="refreshScramble">
+      <text class="refresh-icon">↺ 刷新打乱</text>
+    </view>
+  </view>
+
+  <!-- 2. WCA 打乱展示区 -->
+  <view class="scramble-box {{appState === 'RUNNING' ? 'fade-out' : ''}}" bindtap="refreshScramble">
+    <text class="scramble-text">{{scrambleText}}</text>
+  </view>
+
+  <!-- 3. 主计时触控面板 -->
+  <view 
+    class="timer-touch-area" 
+    bindtouchstart="onTouchStart" 
+    bindtouchend="onTouchEnd"
+  >
+    <view class="timer-display-box">
+      <text class="timer-display timer-font {{timerClass}}">{{displayTime}}</text>
+    </view>
+
+    <view class="instruction-text {{appState === 'RUNNING' ? 'fade-out' : ''}}">
+      <text wx:if="{{appState === 'IDLE'}}">长按屏幕就绪，松开开启计时</text>
+      <text wx:elif="{{appState === 'HOLDING'}}">保持按住...</text>
+      <text wx:elif="{{appState === 'READY'}}">松手开始计时！</text>
+      <text wx:elif="{{appState === 'RUNNING'}}">再次点击屏幕停止计时</text>
+    </view>
+  </view>
+
+  <!-- 4. 成绩结算 Modal 弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}">
+    <view class="modal-box">
+      <text class="modal-subtitle">本次成绩结算</text>
+      <text class="modal-time timer-font">{{modalTimeDisplay}}</text>
+
+      <view class="modal-actions">
+        <button class="btn-modal btn-ok" bindtap="confirmPenalty" data-penalty="OK">保留 (OK)</button>
+        <view class="modal-row">
+          <button class="btn-modal btn-p2" bindtap="confirmPenalty" data-penalty="+2">+2 秒</button>
+          <button class="btn-modal btn-dnf" bindtap="confirmPenalty" data-penalty="DNF">DNF 废弃</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

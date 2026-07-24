@@ -1,0 +1,53 @@
+<!-- pages/settings/settings.wxml -->
+<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+  
+  <text class="page-title">设置 (Settings)</text>
+
+  <!-- 1. 微信账号云端同步卡片 -->
+  <view class="setting-card card-box">
+    <view class="card-title-row">
+      <text class="card-icon">☁</text>
+      <text class="card-title">微信账号云端备份</text>
+    </view>
+    <text class="cloud-tip">已自动绑定当前微信账号。所有的打乱成绩与个人记录（PB）将实时云端双向同步，换手机登录也不会丢失。</text>
+
+    <button class="btn-sync" bindtap="forceSync">手动同步微信云端数据</button>
+  </view>
+
+  <!-- 2. 偏好设置卡片 -->
+  <view class="setting-card card-box">
+    
+    <!-- 计时显示精度 -->
+    <view class="setting-item">
+      <view class="item-left">
+        <text class="item-title">计时显示精度</text>
+        <text class="item-desc">设置主计时器和小数位显示精度</text>
+      </view>
+      <picker bindchange="onPrecisionChange" value="{{precisionIndex}}" range="{{precisionOptions}}">
+        <view class="item-picker">
+          <text>{{precisionOptions[precisionIndex]}}</text>
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="item-divider"></view>
+
+    <!-- 深色 / 极简黑白主题开关 -->
+    <view class="setting-item">
+      <view class="item-left">
+        <text class="item-title">深色模式 (Dark Mode)</text>
+        <text class="item-desc">切换极简纯白与炫酷黑配色</text>
+      </view>
+      <switch checked="{{theme === 'dark'}}" bindchange="onThemeToggle" color="#3b82f6"/>
+    </view>
+
+  </view>
+
+  <!-- 3. 关于 -->
+  <view class="about-card card-box">
+    <text class="about-name">Cube Timer 微信小程序 v1.0</text>
+    <text class="about-desc">专为魔方爱好者量身打造的高效极速计时器。内置 WCA 标准打乱算法与 119 个 CFOP 高级还原教程。</text>
+  </view>
+
+</view>

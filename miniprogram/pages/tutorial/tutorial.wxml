@@ -1,0 +1,92 @@
+<!-- pages/tutorial/tutorial.wxml -->
+<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+
+  <!-- 1. 胶囊式 Tab 切换栏 -->
+  <view class="segmented-control">
+    <view 
+      class="segment-btn {{activeTab === 'cross' ? 'active' : ''}}" 
+      bindtap="switchTab" data-tab="cross"
+    >C - 底十字</view>
+    <view 
+      class="segment-btn {{activeTab === 'f2l' ? 'active' : ''}}" 
+      bindtap="switchTab" data-tab="f2l"
+    >F - 前两层</view>
+    <view 
+      class="segment-btn {{activeTab === 'oll' ? 'active' : ''}}" 
+      bindtap="switchTab" data-tab="oll"
+    >O - 顶层方向</view>
+    <view 
+      class="segment-btn {{activeTab === 'pll' ? 'active' : ''}}" 
+      bindtap="switchTab" data-tab="pll"
+    >P - 顶层位置</view>
+  </view>
+
+  <!-- 2. 搜索过滤栏 (仅当非 Cross 时显示) -->
+  <view class="search-bar" wx:if="{{activeTab !== 'cross'}}">
+    <input 
+      class="search-input" 
+      placeholder="过滤公式编号或名称（如 F2L 15 / Sune / T）" 
+      bindinput="onSearchInput" 
+      value="{{searchQuery}}"
+    />
+  </view>
+
+  <!-- 3. 教程内容区 -->
+  <scroll-view class="tutorial-scroll" scroll-y="true">
+    
+    <!-- A. 底十字 Cross 建议 -->
+    <block wx:if="{{activeTab === 'cross'}}">
+      <view class="cross-card card-box">
+        <text class="cross-title">{{crossData.title}}</text>
+        <text class="cross-concept">{{crossData.concept}}</text>
+        
+        <text class="cross-subtitle">学习与提升步骤建议：</text>
+        <block wx:for="{{crossData.steps}}" wx:key="index">
+          <view class="cross-step-item">
+            <text class="step-text">{{item}}</text>
+          </view>
+        </block>
+      </view>
+    </block>
+
+    <!-- B. F2L / OLL / PLL 公式卡片分组 -->
+    <block wx:else>
+      <view class="empty-search" wx:if="{{groupsList.length === 0}}">
+        <text>未找到匹配的公式</text>
+      </view>
+
+      <block wx:for="{{groupsList}}" wx:key="category">
+        <view class="group-section">
+          <view class="group-header">
+            <text class="group-icon">❖</text>
+            <text class="group-name">{{item.category}}</text>
+          </view>
+
+          <view class="formula-grid">
+            <block wx:for="{{item.list}}" wx:for-item="formula" wx:key="id">
+              <view class="formula-card card-box">
+                
+                <!-- 卡片头部 -->
+                <view class="card-header">
+                  <view class="badge badge-{{activeTab}}">{{formula.id}}</view>
+                  <text class="formula-name">{{formula.name}}</text>
+                </view>
+
+                <!-- 公式文本与复制按钮 -->
+                <view class="formula-body">
+                  <text class="formula-code timer-font">{{formula.formula}}</text>
+                  <view class="copy-btn" bindtap="copyFormula" data-formula="{{formula.formula}}">
+                    <text class="copy-text">复制</text>
+                  </view>
+                </view>
+
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </block>
+
+  </scroll-view>
+
+</view>

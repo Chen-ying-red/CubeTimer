@@ -1,0 +1,15 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "CubeTimer",
+  "description": "专业魔方计时器 - 支持WCA打乱、CFOP教程与微信账号云端数据同步",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.25.0"
+}

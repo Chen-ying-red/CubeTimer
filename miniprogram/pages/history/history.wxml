@@ -1,0 +1,65 @@
+<!-- pages/history/history.wxml -->
+<view class="page-container {{theme === 'light' ? 'theme-light' : ''}}">
+  
+  <!-- 统计概览卡片 -->
+  <view class="stats-card card-box">
+    <view class="stats-row">
+      <view class="stats-item">
+        <text class="stats-label">最佳成绩 (PB)</text>
+        <text class="stats-val pb-text timer-font">{{pbDisplay}}</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-label">总还原次数</text>
+        <text class="stats-val timer-font">{{totalCount}}</text>
+      </view>
+    </view>
+
+    <view class="stats-divider"></view>
+
+    <view class="stats-row">
+      <view class="stats-item">
+        <text class="stats-label">当前 Ao5</text>
+        <text class="stats-val timer-font">{{ao5Display}}</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-label">当前 Ao12</text>
+        <text class="stats-val timer-font">{{ao12Display}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 微信云端同步状态卡片 -->
+  <view class="sync-banner">
+    <text class="sync-icon">☁</text>
+    <text class="sync-text">成绩已自动与当前微信账号（云端）实时同步备份</text>
+  </view>
+
+  <!-- 历史列表 -->
+  <view class="list-header">
+    <text class="list-title">成绩列表</text>
+    <text class="clear-btn" bindtap="clearHistory" wx:if="{{solves.length > 0}}">清空全部</text>
+  </view>
+
+  <scroll-view class="history-scroll" scroll-y="true">
+    <view class="empty-tip" wx:if="{{solves.length === 0}}">
+      <text>暂无历史成绩，去完成第一次还原吧！</text>
+    </view>
+
+    <block wx:for="{{solves}}" wx:key="id">
+      <view class="solve-card card-box">
+        <view class="solve-main">
+          <view class="solve-info">
+            <text class="solve-index">#{{solves.length - index}}</text>
+            <text class="solve-puzzle">{{item.puzzle}}</text>
+          </view>
+          <text class="solve-time timer-font">{{item.displayTime}}</text>
+        </view>
+        <view class="solve-details">
+          <text class="scramble-preview">{{item.scramble}}</text>
+          <text class="delete-btn" bindtap="deleteSolve" data-id="{{item.id}}">删除</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+</view>

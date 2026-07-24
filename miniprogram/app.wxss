@@ -1,0 +1,57 @@
+/** app.wxss **/
+page {
+  background-color: #121212;
+  color: #e5e5e5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+}
+
+page.theme-light {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 计时字体 */
+.timer-font {
+  font-family: monospace;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 常规卡片与布局 */
+.card-box {
+  background-color: #1c1c1e;
+  border: 1rpx solid #2c2c2e;
+  border-radius: 24rpx;
+  padding: 24rpx;
+}
+
+page.theme-light .card-box {
+  background-color: #f9fafb;
+  border: 1rpx solid #e5e7eb;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-radius: 16rpx;
+  font-weight: bold;
+  font-size: 28rpx;
+  padding: 16rpx 32rpx;
+  text-align: center;
+}
+
+.btn-primary:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
