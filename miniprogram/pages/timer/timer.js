@@ -7,9 +7,9 @@ let intervalTimer = null;
 
 Page({
   data: {
-    theme: 'dark',
+    themeClass: 'theme-minimal',
     precision: 2,
-    puzzleList: ['3x3x3', '2x2x2', '4x4x4', '5x5x5', 'Pyraminx', 'Megaminx', 'Skewb', 'SQ1', 'Clock'],
+    puzzleList: ['3x3', '2x2', '4x4', '5x5', 'Pyraminx', 'Megaminx', 'Skewb', 'SQ1', 'Clock'],
     puzzleIndex: 0,
     scrambleText: '',
     appState: 'IDLE', // IDLE, HOLDING, READY, RUNNING
@@ -26,13 +26,13 @@ Page({
   },
 
   onShow: function () {
-    const theme = app.globalData.theme;
+    const theme = app.globalData.theme || 'dark';
     const style = app.globalData.themeStyle || 'minimal';
     const themeClass = theme === 'light' ? 'theme-light' : ('theme-' + style);
 
     this.setData({
       themeClass: themeClass,
-      precision: app.globalData.precision
+      precision: app.globalData.precision || 2
     });
     this.updateDisplayTime(0);
   },
@@ -90,7 +90,7 @@ Page({
         appState: 'HOLDING',
         timerClass: 'timer-holding'
       });
-      wx.vibrateShort({ type: 'light' });
+      if (wx.vibrateShort) wx.vibrateShort({ type: 'light' });
 
       // 按住 300ms 进入 READY 就绪
       holdTimer = setTimeout(() => {
@@ -99,7 +99,7 @@ Page({
             appState: 'READY',
             timerClass: 'timer-ready'
           });
-          wx.vibrateShort({ type: 'medium' });
+          if (wx.vibrateShort) wx.vibrateShort({ type: 'medium' });
         }
       }, 300);
     }

@@ -54,7 +54,9 @@
   margin-bottom: 24rpx;
 }
 
-.sync-icon-svg {
+.sync-icon {
+  width: 32rpx;
+  height: 32rpx;
   flex-shrink: 0;
 }
 
@@ -81,6 +83,11 @@
   display: flex;
   align-items: center;
   gap: 6rpx;
+}
+
+.trash-icon {
+  width: 28rpx;
+  height: 28rpx;
 }
 
 .clear-text {
