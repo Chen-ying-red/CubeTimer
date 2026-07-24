@@ -5,22 +5,10 @@
   height: 100vh;
   padding: 24rpx;
   box-sizing: border-box;
-  background-color: #121212;
-  color: #ffffff;
-}
-
-.theme-light {
-  background-color: #ffffff;
-  color: #111827;
 }
 
 .stats-card {
   margin-bottom: 24rpx;
-  background-color: #1c1c1e;
-}
-
-.theme-light .stats-card {
-  background-color: #f9fafb;
 }
 
 .stats-row {
@@ -36,7 +24,7 @@
 
 .stats-label {
   font-size: 22rpx;
-  color: #9ca3af;
+  opacity: 0.7;
   margin-bottom: 8rpx;
 }
 
@@ -51,33 +39,29 @@
 
 .stats-divider {
   height: 1rpx;
-  background-color: #2c2c2e;
+  background-color: rgba(255, 255, 255, 0.1);
   margin: 20rpx 0;
-}
-
-.theme-light .stats-divider {
-  background-color: #e5e7eb;
 }
 
 .sync-banner {
   display: flex;
   align-items: center;
-  background-color: rgba(59, 130, 246, 0.1);
-  border: 1rpx solid rgba(59, 130, 246, 0.2);
+  gap: 12rpx;
+  background-color: rgba(59, 130, 246, 0.12);
+  border: 1rpx solid rgba(59, 130, 246, 0.25);
   border-radius: 16rpx;
   padding: 16rpx 24rpx;
   margin-bottom: 24rpx;
 }
 
-.sync-icon {
-  font-size: 28rpx;
-  color: #3b82f6;
-  margin-right: 12rpx;
+.sync-icon-svg {
+  flex-shrink: 0;
 }
 
 .sync-text {
   font-size: 22rpx;
   color: #3b82f6;
+  font-weight: 500;
 }
 
 .list-header {
@@ -94,6 +78,12 @@
 }
 
 .clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.clear-text {
   font-size: 24rpx;
   color: #ef4444;
 }
@@ -107,7 +97,7 @@
   text-align: center;
   padding: 80rpx 0;
   font-size: 26rpx;
-  color: #6b7280;
+  opacity: 0.6;
 }
 
 .solve-card {
@@ -130,21 +120,15 @@
 
 .solve-index {
   font-size: 24rpx;
-  color: #9ca3af;
+  opacity: 0.6;
   font-weight: bold;
 }
 
 .solve-puzzle {
   font-size: 24rpx;
-  background-color: #2c2c2e;
+  background-color: rgba(255, 255, 255, 0.1);
   padding: 4rpx 12rpx;
   border-radius: 8rpx;
-  color: #d1d5db;
-}
-
-.theme-light .solve-puzzle {
-  background-color: #e5e7eb;
-  color: #374151;
 }
 
 .solve-time {
@@ -160,7 +144,7 @@
 
 .scramble-preview {
   font-size: 20rpx;
-  color: #6b7280;
+  opacity: 0.6;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;

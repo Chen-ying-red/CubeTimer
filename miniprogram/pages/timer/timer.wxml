@@ -5,12 +5,24 @@
   <view class="top-bar {{appState === 'RUNNING' ? 'fade-out' : ''}}">
     <picker bindchange="onPuzzleChange" value="{{puzzleIndex}}" range="{{puzzleList}}">
       <view class="puzzle-picker">
+        <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+          <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
         <text class="puzzle-title">{{puzzleList[puzzleIndex]}}</text>
-        <text class="picker-icon">▼</text>
+        <svg class="icon-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
       </view>
     </picker>
+
     <view class="refresh-btn" bindtap="refreshScramble">
-      <text class="refresh-icon">↺ 刷新打乱</text>
+      <svg class="icon-refresh" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+      </svg>
+      <text class="refresh-text">刷新打乱</text>
     </view>
   </view>
 
@@ -33,13 +45,13 @@
       <text wx:if="{{appState === 'IDLE'}}">长按屏幕就绪，松开开启计时</text>
       <text wx:elif="{{appState === 'HOLDING'}}">保持按住...</text>
       <text wx:elif="{{appState === 'READY'}}">松手开始计时！</text>
-      <text wx:elif="{{appState === 'RUNNING'}}">再次点击屏幕停止计时</text>
+      <text wx:elif="{{appState === 'RUNNING'}}">点击屏幕停止计时</text>
     </view>
   </view>
 
   <!-- 4. 成绩结算 Modal 弹窗 -->
   <view class="modal-mask" wx:if="{{showModal}}">
-    <view class="modal-box">
+    <view class="modal-box card-box">
       <text class="modal-subtitle">本次成绩结算</text>
       <text class="modal-time timer-font">{{modalTimeDisplay}}</text>
 

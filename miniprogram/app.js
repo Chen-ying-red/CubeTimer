@@ -1,4 +1,6 @@
 // app.js
+const cloudDb = require('./utils/cloud_db.js');
+
 App({
   globalData: {
     theme: 'dark', // 'dark' | 'light'
@@ -17,9 +19,9 @@ App({
           traceUser: true
         });
         this.globalData.cloudEnabled = true;
-        console.log("微信云开发初始化成功");
+        console.log("微信云开发 (CloudBase) 环境初始化成功");
       } catch (err) {
-        console.warn("未配置云开发环境，将默认使用本地缓存", err);
+        console.warn("未配置云开发环境或使用测试号，默认激活本地高速存储", err);
       }
     }
 
@@ -39,7 +41,7 @@ App({
       this.globalData.precision = parseInt(precision);
       this.globalData.solves = solves;
 
-      // 3. 如果启用了云开发，进行微信账号云端成绩静默拉取与同步
+      // 3. 如果启用了云开发，静默合并拉取微信账号云端成绩
       if (this.globalData.cloudEnabled) {
         this.syncCloudData();
       }
@@ -48,49 +50,46 @@ App({
     }
   },
 
-  // 微信账号云端数据同步
+  // 微信账号云端数据拉取与去重合并
   syncCloudData: function () {
     const that = this;
-    wx.cloud.callFunction({
-      name: 'syncSolves',
-      data: {
-        solves: that.globalData.solves
-      },
-      success: res => {
-        if (res.result && res.result.solves) {
-          that.globalData.solves = res.result.solves;
-          wx.setStorageSync('cubeTimerSolves', res.result.solves);
-          console.log("微信账号云端成绩同步成功，共", res.result.solves.length, "条记录");
-        }
-      },
-      fail: err => {
-        console.log("静默云同步，使用本地记录", err);
+    cloudDb.fetchSolvesFromCloud().then(cloudSolves => {
+      if (cloudSolves && cloudSolves.length > 0) {
+        // 本地与云端数据合并去重
+        const localSolves = that.globalData.solves || [];
+        const solveMap = {};
+
+        localSolves.forEach(item => { if (item.id) solveMap[item.id] = item; });
+        cloudSolves.forEach(item => { if (item.id) solveMap[item.id] = item; });
+
+        const mergedList = Object.values(solveMap).sort((a, b) => b.timestamp - a.timestamp);
+        that.globalData.solves = mergedList;
+        wx.setStorageSync('cubeTimerSolves', mergedList);
+        console.log("微信账号云端成绩拉取合并成功，当前共", mergedList.length, "条成绩");
       }
+    }).catch(err => {
+      console.log("云端静默读取跳过", err);
     });
   },
 
-  // 保存单次成绩
+  // 保存单次成绩 (本地 + 微信账号云数据库)
   saveSolve: function (solveObj) {
     this.globalData.solves.unshift(solveObj);
     wx.setStorageSync('cubeTimerSolves', this.globalData.solves);
 
-    // 云端异步备份保存到微信账号数据库
+    // 写入微信账号云端数据库
     if (this.globalData.cloudEnabled) {
-      const db = wx.cloud.database();
-      db.collection('solves').add({
-        data: solveObj
-      }).catch(err => console.log("云端写入跳过:", err));
+      cloudDb.saveSolveToCloud(solveObj);
     }
   },
 
-  // 删除单次成绩
+  // 删除单次成绩 (本地 + 微信账号云数据库)
   deleteSolve: function (id) {
     this.globalData.solves = this.globalData.solves.filter(item => item.id !== id);
     wx.setStorageSync('cubeTimerSolves', this.globalData.solves);
 
     if (this.globalData.cloudEnabled) {
-      const db = wx.cloud.database();
-      db.collection('solves').where({ id: id }).remove().catch(err => console.log("云端删除跳过:", err));
+      cloudDb.deleteSolveFromCloud(id);
     }
   },
 
